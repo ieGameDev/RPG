@@ -2274,8 +2274,8 @@ GameObject:
   - component: {fileID: 7019920669011962644}
   - component: {fileID: 7413344840680693326}
   - component: {fileID: 3181790647444397339}
-  - component: {fileID: 2020913918032950060}
-  - component: {fileID: 1670854130111116023}
+  - component: {fileID: 1374073586908391133}
+  - component: {fileID: 2144702452235366086}
   m_Layer: 0
   m_Name: FemaleCharacter
   m_TagString: Untagged
@@ -2342,7 +2342,21 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.75, z: 0}
---- !u!114 &2020913918032950060
+--- !u!114 &1374073586908391133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7647134206250791342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177f96185938fc343bf4c55c0a2990ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterController: {fileID: 3181790647444397339}
+  _movementSpeed: 5
+--- !u!114 &2144702452235366086
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2356,20 +2370,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 7413344840680693326}
   _characterController: {fileID: 3181790647444397339}
---- !u!114 &1670854130111116023
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7647134206250791342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 177f96185938fc343bf4c55c0a2990ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _characterController: {fileID: 3181790647444397339}
-  _movementSpeed: 4
 --- !u!1 &7667767699941656935
 GameObject:
   m_ObjectHideFlags: 0
