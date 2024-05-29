@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Services.Input
+namespace Assets.Scripts.Infrastructure.Services.Input
 {
     public class StandalobeInputService : InputService
     {

@@ -1,20 +1,21 @@
-using Assets.Scripts.Infrastructure;
-using Assets.Scripts.Services.Input;
+using Assets.Scripts.Infrastructure.Services;
+using Assets.Scripts.Infrastructure.Services.Input;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
+    [RequireComponent(typeof(CharacterController))]
     public class PlayerMove : MonoBehaviour
     {
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private float _movementSpeed;
 
-        private IInputService _inputService;
+        private IInputService _input;
         private Camera _camera;
 
         private void Awake()
         {
-            _inputService = Game.InputService;
+            _input = AllServices.Container.Single<IInputService>();
         }
 
         private void Start()
@@ -26,9 +27,9 @@ namespace Assets.Scripts.Player
         {
             Vector3 movementVector = Vector3.zero;
 
-            if (_inputService.Axis.sqrMagnitude > 0)
+            if (_input.Axis.sqrMagnitude > 0)
             {
-                movementVector = _camera.transform.TransformDirection(_inputService.Axis);
+                movementVector = _camera.transform.TransformDirection(_input.Axis);
                 movementVector.y = 0;
                 movementVector.Normalize();
 
