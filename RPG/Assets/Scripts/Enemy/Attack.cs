@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services;
-using System;
+using Assets.Scripts.Player;
 using System.Linq;
 using UnityEngine;
 
@@ -9,15 +9,15 @@ namespace Assets.Scripts.Enemy
     [RequireComponent(typeof(EnemyAnimator))]
     public class Attack : MonoBehaviour
     {
-        public EnemyAnimator Animator;
-
-        public float AttackCooldown = 3f;
-        public float Cleavage = 0.5f;
-        public float EffectiveDistance = 0.5f;
+        [SerializeField] private EnemyAnimator Animator;
+        [SerializeField] private float AttackCooldown = 3f;
+        [SerializeField] private float Cleavage = 0.5f;
+        [SerializeField] private float EffectiveDistance = 0.5f;
+        [SerializeField] private float _damage = 30f;
 
         private IGameFactory _gameFactory;
         private Transform _playerTransform;
-        private float _attackCooldown;
+        private float _cooldown;
         private bool _isAttacking;
         private int _layerMask;
         private Collider[] _hits = new Collider[1];
@@ -44,8 +44,15 @@ namespace Assets.Scripts.Enemy
         {
             if (Hit(out Collider hit))
             {
-                Debug.Log("Damage");
+                hit.transform.GetComponent<PlayerHealth>().TakeDamage(_damage);
+                Debug.Log(_damage);
             }
+        }
+
+        private void OnAttackEnded()
+        {
+            _cooldown = AttackCooldown;
+            _isAttacking = false;
         }
 
         private bool Hit(out Collider hit)
@@ -53,12 +60,6 @@ namespace Assets.Scripts.Enemy
             int hitsCount = Physics.OverlapSphereNonAlloc(StartPoint(), Cleavage, _hits, _layerMask);
             hit = _hits.FirstOrDefault();
             return hitsCount > 0;
-        }
-
-        private void OnAttackEnded()
-        {
-            _attackCooldown = AttackCooldown;
-            _isAttacking = false;
         }
 
         public void DisableAttack() =>
@@ -73,14 +74,14 @@ namespace Assets.Scripts.Enemy
         private void UpdateCooldown()
         {
             if (!CooldownIsUp())
-                _attackCooldown -= Time.deltaTime;
+                _cooldown -= Time.deltaTime;
         }
 
         private bool CanAttack() =>
            _attackIsActive && !_isAttacking && CooldownIsUp();
 
         private bool CooldownIsUp() =>
-            _attackCooldown <= 0;
+            _cooldown <= 0;
 
         private void StartAttack()
         {

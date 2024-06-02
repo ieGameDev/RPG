@@ -30,7 +30,14 @@ namespace Assets.Scripts.Infrastructure.States
         private void LoadProgressOrInitialNew() => 
             _progressService.Progress = _saveLoadService.LoadProgress() ?? NewProgress();
 
-        private PlayerProgress NewProgress() =>
-            new PlayerProgress(initialLevel: "Main");
+        private PlayerProgress NewProgress()
+        {
+            var progress = new PlayerProgress(initialLevel: "Main");
+
+            progress.PlayerState.MaxHP = 100f;
+            progress.PlayerState.ResetHP();
+
+            return progress;
+        }
     }
 }

@@ -2,7 +2,8 @@
 using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Logic;
-using System;
+using Assets.Scripts.Player;
+using Assets.Scripts.UI;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure.States
@@ -53,12 +54,20 @@ namespace Assets.Scripts.Infrastructure.States
 
         private void InitGameWorld()
         {
-            GameObject player = _gameFactory.CreatePlayer(GameObject.FindWithTag(InitialPointTag));
-
-            _gameFactory.CreateHud();
-
+            GameObject player = InitPlayer();
+            InitHud(player);
             CameraFollow(player);
         }
+
+        private void InitHud(GameObject player)
+        {
+            GameObject hud = _gameFactory.CreateHud();
+
+            hud.GetComponentInChildren<ActorUI>().Construct(player.GetComponent<PlayerHealth>());
+        }
+
+        private GameObject InitPlayer() => 
+            _gameFactory.CreatePlayer(GameObject.FindWithTag(InitialPointTag));
 
         private void CameraFollow(GameObject player) =>
             Camera.main.GetComponent<CameraFollow>().Follow(player);

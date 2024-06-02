@@ -2274,9 +2274,11 @@ GameObject:
   - component: {fileID: 7019920669011962644}
   - component: {fileID: 7413344840680693326}
   - component: {fileID: 3181790647444397339}
+  - component: {fileID: 1093698027253667821}
   - component: {fileID: 1374073586908391133}
   - component: {fileID: 2144702452235366086}
-  - component: {fileID: 1093698027253667821}
+  - component: {fileID: 6990149312043874278}
+  - component: {fileID: -7644809331613345660}
   m_Layer: 12
   m_Name: FemaleCharacter
   m_TagString: Player
@@ -2343,6 +2345,19 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!65 &1093698027253667821
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7647134206250791342}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &1374073586908391133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2370,19 +2385,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 7413344840680693326}
   _characterController: {fileID: 3181790647444397339}
---- !u!65 &1093698027253667821
-BoxCollider:
+--- !u!114 &6990149312043874278
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7647134206250791342}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.5, y: 1.5, z: 1.5}
-  m_Center: {x: 0, y: 1, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b07b84b9ffe3eaa48a1d4ec71d5344bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerAnimator: {fileID: 2144702452235366086}
+--- !u!114 &-7644809331613345660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7647134206250791342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd14a45de1ca7004e9ac2d1f3912e001, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 6990149312043874278}
+  _move: {fileID: 1374073586908391133}
+  _animator: {fileID: 2144702452235366086}
+  _playerDeathFX: {fileID: 5985634496115995773, guid: 463cf9f7af4680240898f6aeba3fe3e6,
+    type: 3}
 --- !u!1 &7667767699941656935
 GameObject:
   m_ObjectHideFlags: 0
