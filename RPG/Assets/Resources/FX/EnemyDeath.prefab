@@ -18989,7 +18989,7 @@ GameObject:
   - component: {fileID: 7226888052703040408}
   - component: {fileID: 7226888052703040405}
   m_Layer: 0
-  m_Name: CFXR2 WW Enemy Explosion
+  m_Name: EnemyDeath
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

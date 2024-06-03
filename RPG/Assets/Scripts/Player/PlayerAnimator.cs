@@ -12,6 +12,7 @@ namespace Assets.Scripts.Player
         private static readonly int Move = Animator.StringToHash("Walking");
         private static readonly int Hit = Animator.StringToHash("Hit");
         private static readonly int Die = Animator.StringToHash("Die");
+        private static readonly int Attack = Animator.StringToHash("Attack01");
 
         private readonly int _idleStateHash = Animator.StringToHash("Idle");
         private readonly int _attackStateHash = Animator.StringToHash("Attack01");
@@ -32,8 +33,11 @@ namespace Assets.Scripts.Player
         public void PLayHit() =>
             _animator.SetTrigger(Hit);
 
-        public void PlayDeath() => 
+        public void PlayDeath() =>
             _animator.SetTrigger(Die);
+
+        public void PlayAttack() =>
+            _animator.SetTrigger(Attack);
 
         public void EnteredState(int stateHash)
         {

@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services;
-using Assets.Scripts.Player;
+using Assets.Scripts.Logic;
 using System.Linq;
 using UnityEngine;
 
@@ -44,7 +44,7 @@ namespace Assets.Scripts.Enemy
         {
             if (Hit(out Collider hit))
             {
-                hit.transform.GetComponent<PlayerHealth>().TakeDamage(_damage);
+                hit.transform.GetComponent<IHealth>().TakeDamage(_damage);
                 Debug.Log(_damage);
             }
         }

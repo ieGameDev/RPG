@@ -6,12 +6,14 @@ namespace Assets.Scripts.Infrastructure.Services.Input
     {
         protected const string Horizontal = "Horizontal";
         protected const string Vertical = "Vertical";
-        protected const string Attack = "Attack";
+        private const string Attack = "Attack";
 
         public abstract Vector2 Axis { get; }
 
-        public bool IsAttackButtonUp() =>
-            SimpleInput.GetButtonUp(Attack);
+        public bool IsAttackButtonUp()
+        {
+            return SimpleInput.GetButtonUp(Attack);
+        }
 
         protected static Vector2 SimpleInputAxis() =>
             new Vector2(SimpleInput.GetAxis(Horizontal), SimpleInput.GetAxis(Vertical));

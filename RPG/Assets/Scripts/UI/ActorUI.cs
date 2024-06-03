@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Player;
+﻿using Assets.Scripts.Logic;
 using UnityEngine;
 
 namespace Assets.Scripts.UI
@@ -7,21 +7,27 @@ namespace Assets.Scripts.UI
     {
         [SerializeField] private HpBar _hpBar;
 
-        private PlayerHealth _playerHealth;
+        private IHealth _health;
+
+        public void Construct(IHealth health)
+        {
+            _health = health;
+
+            _health.HealthChanged += UpdateHpBar;
+        }
+
+        private void Start()
+        {
+            IHealth health = GetComponent<IHealth>();
+
+            if (health != null)
+                Construct(health);
+        }
 
         private void OnDestroy() => 
-            _playerHealth.HealthChanged -= UpdateHpBar;
+            _health.HealthChanged -= UpdateHpBar;
 
-        public void Construct(PlayerHealth health)
-        {
-            _playerHealth = health;
-
-            _playerHealth.HealthChanged += UpdateHpBar;
-        }
-
-        private void UpdateHpBar()
-        {
-            _hpBar.SetValue(_playerHealth.Current, _playerHealth.Max);
-        }
+        private void UpdateHpBar() => 
+            _hpBar.SetValue(_health.CurrentHealth, _health.MaxHealth);
     }
 }

@@ -32,9 +32,11 @@ namespace Assets.Scripts.Infrastructure.States
 
         private PlayerProgress NewProgress()
         {
-            var progress = new PlayerProgress(initialLevel: "Main");
+            PlayerProgress progress = new PlayerProgress(initialLevel: "Main");
 
             progress.PlayerState.MaxHP = 100f;
+            progress.PlayerStats.Damage = 20f;
+            progress.PlayerStats.DamageRadius = 0.5f;
             progress.PlayerState.ResetHP();
 
             return progress;

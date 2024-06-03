@@ -6,6 +6,7 @@ namespace Assets.Scripts.Player
     {
         [SerializeField] private PlayerHealth _health;
         [SerializeField] private PlayerMove _move;
+        [SerializeField] private PlayerAttack _attack;
         [SerializeField] private PlayerAnimator _animator;
 
         [SerializeField] private GameObject _playerDeathFX;
@@ -19,7 +20,7 @@ namespace Assets.Scripts.Player
 
         private void HealthChanged()
         {
-            if (!_isDead && _health.Current <= 0)
+            if (!_isDead && _health.CurrentHealth <= 0)
                 Die();
         }
 
@@ -28,6 +29,7 @@ namespace Assets.Scripts.Player
             _isDead = true;
 
             _move.enabled = false;
+            _attack.enabled = false;
             _animator.PlayDeath();
 
             Instantiate(_playerDeathFX, DeadEffectPosition(), Quaternion.identity);

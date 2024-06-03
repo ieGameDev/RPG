@@ -2279,6 +2279,7 @@ GameObject:
   - component: {fileID: 2144702452235366086}
   - component: {fileID: 6990149312043874278}
   - component: {fileID: -7644809331613345660}
+  - component: {fileID: 8309546902206412933}
   m_Layer: 12
   m_Name: FemaleCharacter
   m_TagString: Player
@@ -2412,9 +2413,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: {fileID: 6990149312043874278}
   _move: {fileID: 1374073586908391133}
+  _attack: {fileID: 8309546902206412933}
   _animator: {fileID: 2144702452235366086}
   _playerDeathFX: {fileID: 5985634496115995773, guid: 463cf9f7af4680240898f6aeba3fe3e6,
     type: 3}
+--- !u!114 &8309546902206412933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7647134206250791342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81ae63476e0d2664aa8cd32fbba4f948, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerAnimator: {fileID: 2144702452235366086}
+  _characterController: {fileID: 3181790647444397339}
 --- !u!1 &7667767699941656935
 GameObject:
   m_ObjectHideFlags: 0
