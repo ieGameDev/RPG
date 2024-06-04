@@ -17,5 +17,6 @@ namespace Assets.Scripts.Infrastructure.Factory
         GameObject CreatePlayer(GameObject initialPoint);
         GameObject CreateHud();
         void CleanUp();
+        void Register(ISavedProgressReader progressReader);
     }
 }
