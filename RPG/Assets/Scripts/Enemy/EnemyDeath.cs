@@ -10,12 +10,12 @@ namespace Assets.Scripts.Enemy
     {
         [SerializeField] private EnemyHealth _enemyHealth;
         [SerializeField] private EnemyAnimator _enemyAnimator;
-
+        [SerializeField] private AgentMoveToPlayer _enemyMove;
         [SerializeField] private GameObject _deathFX;
 
-        public event Action Happend;
+        public event Action DeathHappened;
 
-        private void Start() =>
+        private void Start() => 
             _enemyHealth.HealthChanged += HealthChanged;
 
         private void OnDestroy() =>
@@ -32,20 +32,21 @@ namespace Assets.Scripts.Enemy
             _enemyHealth.HealthChanged -= HealthChanged;
 
             _enemyAnimator.PlayDeath();
+            _enemyMove.enabled = false;
 
-            SpawnDeadFX();
             StartCoroutine(DestroyTimer());
 
-            Happend?.Invoke();
+            DeathHappened?.Invoke();
         }
 
-        private void SpawnDeadFX() => 
-            Instantiate(_deathFX, transform.position, Quaternion.identity);
+        private void SpawnDeadFX() =>
+            Instantiate(_deathFX, transform.position, Quaternion.Euler(-90, 0, 0));
 
         private IEnumerator DestroyTimer()
         {
             yield return new WaitForSeconds(3);
-            Destroy(gameObject);
+            Destroy(gameObject);            
+            SpawnDeadFX();
         }
     }
 }

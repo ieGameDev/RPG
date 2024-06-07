@@ -9,8 +9,8 @@ namespace Assets.Scripts.Enemy
     {
         [SerializeField] private EnemyAnimator _enemyAnimator;
 
-        [SerializeField] private float _currentHealth;
-        [SerializeField] private float _maxHealth;
+        private float _currentHealth;
+        private float _maxHealth;
 
         public event Action HealthChanged;
 
@@ -24,7 +24,6 @@ namespace Assets.Scripts.Enemy
             get => _maxHealth;
             set => _maxHealth = value;
         }
-
 
         public void TakeDamage(float damage)
         {

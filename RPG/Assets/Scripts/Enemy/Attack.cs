@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Infrastructure.Factory;
-using Assets.Scripts.Infrastructure.Services;
-using Assets.Scripts.Logic;
+﻿using Assets.Scripts.Logic;
 using System.Linq;
 using UnityEngine;
 
@@ -10,12 +8,7 @@ namespace Assets.Scripts.Enemy
     public class Attack : MonoBehaviour
     {
         [SerializeField] private EnemyAnimator Animator;
-        [SerializeField] private float AttackCooldown = 3f;
-        [SerializeField] private float Cleavage = 0.5f;
-        [SerializeField] private float EffectiveDistance = 0.5f;
-        [SerializeField] private float _damage = 30f;
 
-        private IGameFactory _gameFactory;
         private Transform _playerTransform;
         private float _cooldown;
         private bool _isAttacking;
@@ -23,13 +16,17 @@ namespace Assets.Scripts.Enemy
         private Collider[] _hits = new Collider[1];
         private bool _attackIsActive;
 
+        public float AttackCooldown { get; set; }
+        public float Cleavage { get; set; }
+        public float EffectiveDistance { get; set; }
+        public float Damage { get; set; }
+
+        public void Construct(Transform playerTransform) =>
+            _playerTransform = playerTransform;
+
         private void Awake()
         {
-            _gameFactory = AllServices.Container.Single<IGameFactory>();
-
             _layerMask = 1 << LayerMask.NameToLayer("Player");
-
-            _gameFactory.PlayerCreated += OnPlayerCreated;
         }
 
         private void Update()
@@ -44,8 +41,8 @@ namespace Assets.Scripts.Enemy
         {
             if (Hit(out Collider hit))
             {
-                hit.transform.GetComponent<IHealth>().TakeDamage(_damage);
-                Debug.Log(_damage);
+                hit.transform.GetComponent<IHealth>().TakeDamage(Damage);
+                Debug.Log(Damage);
             }
         }
 
@@ -90,8 +87,5 @@ namespace Assets.Scripts.Enemy
 
             _isAttacking = true;
         }
-
-        private void OnPlayerCreated() =>
-            _playerTransform = _gameFactory.PlayerGameObject.transform;
     }
 }

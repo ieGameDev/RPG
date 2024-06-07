@@ -902,8 +902,30 @@ PrefabInstance:
       propertyPath: m_WarningMessage
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6211158230010102665, guid: aad05534a7ba0dd49b8c54ce188308ec,
+        type: 3}
+      propertyPath: _damage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8111480210777264431, guid: aad05534a7ba0dd49b8c54ce188308ec,
+        type: 3}
+      propertyPath: _enemyMove
+      value: 
+      objectReference: {fileID: 6111078570898446095}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aad05534a7ba0dd49b8c54ce188308ec, type: 3}
+--- !u!114 &6111078570898446095 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2979978169862049398, guid: aad05534a7ba0dd49b8c54ce188308ec,
+    type: 3}
+  m_PrefabInstance: {fileID: 9049398297506912633}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b99a544d508fa5f46ba42d39967ba35e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &9049398297506776011 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400050, guid: aad05534a7ba0dd49b8c54ce188308ec,
