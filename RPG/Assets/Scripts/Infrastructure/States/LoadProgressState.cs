@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Data;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.SaveLoad;
+using Assets.Scripts.StaticData;
 
 namespace Assets.Scripts.Infrastructure.States
 {
@@ -9,12 +10,14 @@ namespace Assets.Scripts.Infrastructure.States
         private readonly GameStateMachine _gameStateMachine;
         private readonly IPersistentProgressService _progressService;
         private readonly ISaveLoadService _saveLoadService;
+        private readonly IStaticDataService _staticDataService;
 
-        public LoadProgressState(GameStateMachine gameStateMachine, IPersistentProgressService progressService, ISaveLoadService saveLoadService)
+        public LoadProgressState(GameStateMachine gameStateMachine, IPersistentProgressService progressService, ISaveLoadService saveLoadService, IStaticDataService staticDataService)
         {
             _gameStateMachine = gameStateMachine;
             _progressService = progressService;
             _saveLoadService = saveLoadService;
+            _staticDataService = staticDataService;
         }
 
         public void Enter()
@@ -32,11 +35,12 @@ namespace Assets.Scripts.Infrastructure.States
 
         private PlayerProgress NewProgress()
         {
+            PlayerStaticData staticData = _staticDataService.PlayerData();
             PlayerProgress progress = new PlayerProgress(initialLevel: "Main");
 
-            progress.PlayerState.MaxHP = 100f;
-            progress.PlayerStats.Damage = 20f;
-            progress.PlayerStats.DamageRadius = 0.5f;
+            progress.PlayerState.MaxHP = staticData.Hp;
+            progress.PlayerStats.Damage = staticData.Damage;
+            progress.PlayerStats.DamageRadius = staticData.DamageRadius;
             progress.PlayerState.ResetHP();
 
             return progress;

@@ -17,7 +17,7 @@ namespace Assets.Scripts.Player
 
         public float CurrentHealth
         {
-            get => _state.CurrentHP;
+            get => _state?.CurrentHP ?? 0;
             set
             {
                 if (_state.CurrentHP != value)
@@ -29,8 +29,14 @@ namespace Assets.Scripts.Player
         }
         public float MaxHealth
         {
-            get => _state.MaxHP;
-            set => _state.MaxHP = value;
+            get => _state?.MaxHP ?? 0;
+            set
+            {
+                if (_state != null)
+                {
+                    _state.MaxHP = value;
+                }
+            }
         }
 
         public void LoadProgress(PlayerProgress progress)
@@ -52,6 +58,13 @@ namespace Assets.Scripts.Player
 
             CurrentHealth -= damage;
             _playerAnimator.PLayHit();
+
+            HealthChanged?.Invoke();
+        }
+
+        public void Initialize(PlayerState initialState)
+        {
+            _state = initialState;
         }
     }
 }

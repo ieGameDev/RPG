@@ -1,7 +1,9 @@
-﻿using Assets.Scripts.Enemy;
+﻿using Assets.Scripts.Data;
+using Assets.Scripts.Enemy;
 using Assets.Scripts.Infrastructure.AssetManagement;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Logic;
+using Assets.Scripts.Player;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI;
 using System.Collections.Generic;
@@ -29,7 +31,29 @@ namespace Assets.Scripts.Infrastructure.Factory
 
         public GameObject CreatePlayer(GameObject initialPoint)
         {
-            PlayerGameObject = InstantiateRegistered(AssetPath.PlayerPath, initialPoint.transform.position);
+            PlayerStaticData playerData = _staticData.PlayerData();
+
+            PlayerGameObject = Object.Instantiate(playerData.Prefab, initialPoint.transform.position, Quaternion.identity);
+            //PlayerGameObject = InstantiateRegistered(AssetPath.PlayerPath, initialPoint.transform.position);
+
+            var playerMove = PlayerGameObject.GetComponent<PlayerMove>();
+            var playerHealth = PlayerGameObject.GetComponent<PlayerHealth>();
+            var playerState = new PlayerState { MaxHP = playerData.Hp, CurrentHP = playerData.Hp };
+            var playerAttack = PlayerGameObject.GetComponent<PlayerAttack>();
+
+            playerMove.MovementSpeed = playerData.MoveSpeed;
+
+            playerHealth.Initialize(playerState);
+            IHealth health = PlayerGameObject.GetComponent<IHealth>();
+            health.CurrentHealth = playerData.Hp;
+            health.MaxHealth = playerData.Hp;
+
+            PlayerProgress playerProgress = new PlayerProgress("initialLevel");
+            playerProgress.PlayerStats.Damage = playerData.Damage;
+            playerProgress.PlayerStats.DamageRadius = playerData.DamageRadius;
+
+            playerAttack.LoadProgress(playerProgress);
+            RegisterProgressWatchers(PlayerGameObject);
 
             return PlayerGameObject;
         }

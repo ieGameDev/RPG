@@ -10,7 +10,7 @@ namespace Assets.Scripts.Player
     [RequireComponent(typeof(CharacterController))]
     public class PlayerMove : MonoBehaviour, ISavedProgress
     {
-        [SerializeField] private float _movementSpeed;
+        public float MovementSpeed;
 
         private CharacterController _characterController;
         private IInputService _input;
@@ -36,7 +36,7 @@ namespace Assets.Scripts.Player
 
             movementVector += Physics.gravity;
 
-            _characterController.Move(_movementSpeed * movementVector * Time.deltaTime);
+            _characterController.Move(MovementSpeed * movementVector * Time.deltaTime);
         }
 
         public void UpdateProgress(PlayerProgress progress) =>

@@ -902,6 +902,11 @@ PrefabInstance:
       propertyPath: m_WarningMessage
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1499848767493270587, guid: aad05534a7ba0dd49b8c54ce188308ec,
+        type: 3}
+      propertyPath: Cooldown
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6211158230010102665, guid: aad05534a7ba0dd49b8c54ce188308ec,
         type: 3}
       propertyPath: _damage

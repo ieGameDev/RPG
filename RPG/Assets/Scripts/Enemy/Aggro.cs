@@ -43,7 +43,7 @@ namespace Assets.Scripts.Enemy
         private IEnumerator SwitchFollowOffAfterCooldown()
         {
             yield return new WaitForSeconds(Cooldown);
-            SwitchFollowOn();
+            SwitchFollowOff();
         }
 
         private void StopAggroCoroutine()

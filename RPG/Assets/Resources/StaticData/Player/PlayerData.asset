@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b0104526c27af84ebdcac02ae2697fc, type: 3}
-  m_Name: Golem
+  m_Script: {fileID: 11500000, guid: ba1e3f76036715d42aed1f587ecdc815, type: 3}
+  m_Name: PlayerData
   m_EditorClassIdentifier: 
-  EnemyTypeId: 10
-  Hp: 200
-  Damage: 30
-  MoveSpeed: 2
-  EffectiveDistance: 1
-  Cleavage: 1
-  Prefab: {fileID: 9049398297506946987, guid: 08aa3cc4134a3ab42ba501ee1b65d568, type: 3}
+  Hp: 100
+  Damage: 20
+  MoveSpeed: 5
+  DamageRadius: 0.5
+  Prefab: {fileID: 7647134206250791342, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
