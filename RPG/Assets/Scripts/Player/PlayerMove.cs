@@ -10,7 +10,7 @@ namespace Assets.Scripts.Player
     [RequireComponent(typeof(CharacterController))]
     public class PlayerMove : MonoBehaviour, ISavedProgress
     {
-        public float MovementSpeed;
+        public float MovementSpeed { get; set; }
 
         private CharacterController _characterController;
         private IInputService _input;
