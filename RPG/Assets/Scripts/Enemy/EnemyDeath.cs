@@ -44,7 +44,7 @@ namespace Assets.Scripts.Enemy
 
         private IEnumerator DestroyTimer()
         {
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(1.5f);
             Destroy(gameObject);            
             SpawnDeadFX();
         }

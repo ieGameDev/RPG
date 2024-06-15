@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Infrastructure.Services;
+﻿using Assets.Scripts.Enemy.EnemyLoot;
+using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.StaticData;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Assets.Scripts.Infrastructure.Factory
         GameObject CreatePlayer(GameObject initialPoint);
         GameObject CreateHud();
         GameObject CreateEnemy(EnemyTypeId enemyTypeId, Transform parent);
+        LootPiece CreateLoot();
 
         void CleanUp();
         void Register(ISavedProgressReader progressReader);

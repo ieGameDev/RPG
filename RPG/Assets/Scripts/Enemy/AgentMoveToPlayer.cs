@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Infrastructure.Factory;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 namespace Assets.Scripts.Enemy
@@ -11,7 +10,6 @@ namespace Assets.Scripts.Enemy
         public NavMeshAgent Agent;
 
         private Transform _playerTransform;
-        private IGameFactory _gameFactory;
 
         public void Construct(Transform playerTransform) => 
             _playerTransform = playerTransform;        

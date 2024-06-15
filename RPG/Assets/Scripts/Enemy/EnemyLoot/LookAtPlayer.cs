@@ -1,7 +1,7 @@
 using Assets.Scripts.Player;
 using UnityEngine;
 
-namespace Assets.Scripts.Enemy.Loot
+namespace Assets.Scripts.Enemy.EnemyLoot
 {
     public class LookAtPlayer : MonoBehaviour
     {
@@ -10,10 +10,9 @@ namespace Assets.Scripts.Enemy.Loot
         private void Start()
         {
             PlayerMove player = FindObjectOfType<PlayerMove>();
+
             if (player != null)
-            {
                 _playerTransform = player.transform;
-            }
         }
 
         private void Update()

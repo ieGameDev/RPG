@@ -1,7 +1,9 @@
 ﻿using Assets.Scripts.Data;
 using Assets.Scripts.Enemy;
+using Assets.Scripts.Enemy.EnemyLoot;
 using Assets.Scripts.Infrastructure.AssetManagement;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
+using Assets.Scripts.Infrastructure.Services.Randomizer;
 using Assets.Scripts.Logic;
 using Assets.Scripts.Player;
 using Assets.Scripts.StaticData;
@@ -17,16 +19,20 @@ namespace Assets.Scripts.Infrastructure.Factory
     {
         private readonly IAssets _assets;
         private readonly IStaticDataService _staticData;
+        private readonly IRandomService _randomService;
+        private readonly IPersistentProgressService _progressService;
 
         public List<ISavedProgressReader> ProgressReaders { get; } = new List<ISavedProgressReader>();
         public List<ISavedProgress> ProgressWriters { get; } = new List<ISavedProgress>();
 
         private GameObject PlayerGameObject { get; set; }
 
-        public GameFactory(IAssets assets, IStaticDataService staticData)
+        public GameFactory(IAssets assets, IStaticDataService staticData, IRandomService randomService, IPersistentProgressService progressService)
         {
             _assets = assets;
             _staticData = staticData;
+            _randomService = randomService;
+            _progressService = progressService;
         }
 
         public GameObject CreatePlayer(GameObject initialPoint)
@@ -36,10 +42,10 @@ namespace Assets.Scripts.Infrastructure.Factory
             PlayerGameObject = Object.Instantiate(playerData.Prefab, initialPoint.transform.position, Quaternion.identity);
             //PlayerGameObject = InstantiateRegistered(AssetPath.PlayerPath, initialPoint.transform.position);
 
-            var playerMove = PlayerGameObject.GetComponent<PlayerMove>();
-            var playerHealth = PlayerGameObject.GetComponent<PlayerHealth>();
-            var playerState = new PlayerState { MaxHP = playerData.Hp, CurrentHP = playerData.Hp };
-            var playerAttack = PlayerGameObject.GetComponent<PlayerAttack>();
+            PlayerMove playerMove = PlayerGameObject.GetComponent<PlayerMove>();
+            PlayerHealth playerHealth = PlayerGameObject.GetComponent<PlayerHealth>();
+            PlayerState playerState = new PlayerState { MaxHP = playerData.Hp, CurrentHP = playerData.Hp };
+            PlayerAttack playerAttack = PlayerGameObject.GetComponent<PlayerAttack>();
 
             playerMove.MovementSpeed = playerData.MoveSpeed;
 
@@ -48,7 +54,7 @@ namespace Assets.Scripts.Infrastructure.Factory
             health.CurrentHealth = playerData.Hp;
             health.MaxHealth = playerData.Hp;
 
-            PlayerProgress playerProgress = new PlayerProgress("initialLevel");
+            PlayerProgress playerProgress = new PlayerProgress("Initial");
             playerProgress.PlayerStats.Damage = playerData.Damage;
             playerProgress.PlayerStats.DamageRadius = playerData.DamageRadius;
 
@@ -58,8 +64,14 @@ namespace Assets.Scripts.Infrastructure.Factory
             return PlayerGameObject;
         }
 
-        public GameObject CreateHud() =>
-            InstantiateRegistered(AssetPath.HudPath);
+        public GameObject CreateHud()
+        {
+            GameObject hud = InstantiateRegistered(AssetPath.HudPath);
+            hud.GetComponentInChildren<LootCounter>()
+                .Construct(_progressService.Progress.WorldData);
+
+            return hud;
+        }
 
         public GameObject CreateEnemy(EnemyTypeId enemyTypeId, Transform parent)
         {
@@ -74,6 +86,10 @@ namespace Assets.Scripts.Infrastructure.Factory
             enemy.GetComponent<AgentMoveToPlayer>().Construct(PlayerGameObject.transform);
             enemy.GetComponent<NavMeshAgent>().speed = enemyData.MoveSpeed;
 
+            LootSpawner lootSpawner = enemy.GetComponentInChildren<LootSpawner>();
+            lootSpawner.SetLoot(enemyData.MinLoot, enemyData.MaxLoot);
+            lootSpawner.Construct(this, _randomService);
+
             Attack attack = enemy.GetComponent<Attack>();
             attack.Construct(PlayerGameObject.transform);
             attack.Damage = enemyData.Damage;
@@ -81,6 +97,16 @@ namespace Assets.Scripts.Infrastructure.Factory
             attack.EffectiveDistance = enemyData.EffectiveDistance;
 
             return enemy;
+        }
+
+        public LootPiece CreateLoot()
+        {
+            LootPiece lootPiece = InstantiateRegistered(AssetPath.LootPath)
+                .GetComponent<LootPiece>();
+
+            lootPiece.Construct(_progressService.Progress.WorldData);
+
+            return lootPiece;
         }
 
         public void CleanUp()
