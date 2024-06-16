@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   Hp: 100
-  Damage: 20
+  Damage: 12
   MoveSpeed: 5
   DamageRadius: 0.5
   Prefab: {fileID: 7647134206250791342, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
