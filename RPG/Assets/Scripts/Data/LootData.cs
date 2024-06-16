@@ -6,6 +6,7 @@ namespace Assets.Scripts.Data
     public class LootData
     {
         public int Collected;
+        public LootPieceDataDictionary LootPiecesOnScene = new LootPieceDataDictionary();
 
         public Action Changed;
 

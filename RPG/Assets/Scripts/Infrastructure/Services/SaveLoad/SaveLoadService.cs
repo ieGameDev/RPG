@@ -27,9 +27,7 @@ namespace Assets.Scripts.Infrastructure.Services.SaveLoad
 
         }
 
-        public PlayerProgress LoadProgress()
-        {
-            return PlayerPrefs.GetString(ProgressKey)?.ToDeserialized<PlayerProgress>();
-        }
+        public PlayerProgress LoadProgress() => 
+            PlayerPrefs.GetString(ProgressKey)?.ToDeserialized<PlayerProgress>();
     }
 }

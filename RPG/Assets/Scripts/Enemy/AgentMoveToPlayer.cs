@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Data;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace Assets.Scripts.Enemy
@@ -24,6 +25,6 @@ namespace Assets.Scripts.Enemy
             _playerTransform != null;
 
         private bool PlayerNotReached() =>
-            Vector3.Distance(Agent.transform.position, _playerTransform.position) >= MinimalDistance;
+            Agent.transform.position.SqrMagnitudeTo(_playerTransform.position) >= MinimalDistance;
     }
 }

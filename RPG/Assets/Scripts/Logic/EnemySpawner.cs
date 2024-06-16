@@ -22,6 +22,11 @@ namespace Assets.Scripts.Logic
             _id = GetComponent<UniqueId>().Id;
             _factory = AllServices.Container.Single<IGameFactory>();
         }
+        private void OnDestroy()
+        {
+            if (_enemyDeath != null)
+                _enemyDeath.DeathHappened -= Slay;
+        }
 
         public void LoadProgress(PlayerProgress progress)
         {
@@ -29,6 +34,12 @@ namespace Assets.Scripts.Logic
                 _slane = true;
             else
                 Spawn();
+        }
+
+        public void UpdateProgress(PlayerProgress progress)
+        {
+            if (_slane)
+                progress.KillData.ClearedSpawners.Add(_id);
         }
 
         private void Spawn()
@@ -44,12 +55,6 @@ namespace Assets.Scripts.Logic
                 _enemyDeath.DeathHappened -= Slay;
 
             _slane = true;
-        }
-
-        public void UpdateProgress(PlayerProgress progress)
-        {
-            if (_slane)
-                progress.KillData.ClearedSpawners.Add(_id);
         }
     }
 }

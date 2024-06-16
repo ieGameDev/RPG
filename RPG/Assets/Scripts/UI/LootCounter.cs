@@ -16,14 +16,10 @@ namespace Assets.Scripts.UI
             _worldData.LootData.Changed += UpdateCounter;
         }
 
-        private void Start()
-        {
+        private void Start() => 
             UpdateCounter();
-        }
 
-        private void UpdateCounter()
-        {
+        private void UpdateCounter() => 
             _counter.text = $"{_worldData.LootData.Collected}";
-        }
     }
 }

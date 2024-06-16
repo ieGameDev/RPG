@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4875317557752469408}
   - component: {fileID: 2483039780888762825}
-  - component: {fileID: 8191746617019864287}
+  - component: {fileID: 1835653396069967580}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: EnemySpawner
@@ -46,8 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyTypeId: 0
-  _slane: 0
---- !u!114 &8191746617019864287
+--- !u!114 &1835653396069967580
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,4 +58,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb96e7f1cfc457489f481f87ba0180d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Id: _5d4830a2-9d06-4bdc-90a4-65d12beda97c
+  Id: EnemySpawner_c63a5f49-b47a-4b1b-9da2-f184d1a96131
