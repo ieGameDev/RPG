@@ -2,9 +2,11 @@
 using Assets.Scripts.Enemy;
 using Assets.Scripts.Enemy.EnemyLoot;
 using Assets.Scripts.Infrastructure.AssetManagement;
+using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.Randomizer;
 using Assets.Scripts.Logic;
+using Assets.Scripts.Logic.EnemySpawners;
 using Assets.Scripts.Player;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI;
@@ -17,6 +19,8 @@ namespace Assets.Scripts.Infrastructure.Factory
 {
     public class GameFactory : IGameFactory
     {
+        private const string InitialLevel = "Initial";
+
         private readonly IAssets _assets;
         private readonly IStaticDataService _staticData;
         private readonly IRandomService _randomService;
@@ -40,7 +44,6 @@ namespace Assets.Scripts.Infrastructure.Factory
             PlayerStaticData playerData = _staticData.PlayerData();
 
             PlayerGameObject = Object.Instantiate(playerData.Prefab, initialPoint.transform.position, Quaternion.identity);
-            //PlayerGameObject = InstantiateRegistered(AssetPath.PlayerPath, initialPoint.transform.position);
 
             PlayerMove playerMove = PlayerGameObject.GetComponent<PlayerMove>();
             PlayerHealth playerHealth = PlayerGameObject.GetComponent<PlayerHealth>();
@@ -54,7 +57,7 @@ namespace Assets.Scripts.Infrastructure.Factory
             health.CurrentHealth = playerData.Hp;
             health.MaxHealth = playerData.Hp;
 
-            PlayerProgress playerProgress = new PlayerProgress("Initial");
+            PlayerProgress playerProgress = _progressService.Progress;
             playerProgress.PlayerStats.Damage = playerData.Damage;
             playerProgress.PlayerStats.DamageRadius = playerData.DamageRadius;
 
@@ -109,6 +112,15 @@ namespace Assets.Scripts.Infrastructure.Factory
             return lootPiece;
         }
 
+        public void CreateSpawner(Vector3 position, string spawnerId, EnemyTypeId enemyTypeId)
+        {
+            EnemySpawnPoint spawner = InstantiateRegistered(AssetPath.Spawner, position).GetComponent<EnemySpawnPoint>();
+
+            spawner.Construct(this);
+            spawner.Id = spawnerId;
+            spawner.EnemyTypeId = enemyTypeId;
+        }
+
         public void CleanUp()
         {
             ProgressReaders.Clear();
@@ -129,7 +141,7 @@ namespace Assets.Scripts.Infrastructure.Factory
             return gameObject;
         }
 
-        public void Register(ISavedProgressReader progressReader)
+        private void Register(ISavedProgressReader progressReader)
         {
             if (progressReader is ISavedProgress progressWriter)
                 ProgressWriters.Add(progressWriter);

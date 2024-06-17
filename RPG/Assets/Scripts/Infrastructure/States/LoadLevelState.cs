@@ -1,10 +1,15 @@
 ﻿using Assets.Scripts.CameraLogic;
+using Assets.Scripts.Data;
+using Assets.Scripts.Enemy.EnemyLoot;
 using Assets.Scripts.Infrastructure.Factory;
+using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Logic;
 using Assets.Scripts.Player;
+using Assets.Scripts.StaticData;
 using Assets.Scripts.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Infrastructure.States
 {
@@ -18,14 +23,16 @@ namespace Assets.Scripts.Infrastructure.States
         private readonly LoadingCurtain _curtain;
         private readonly IGameFactory _gameFactory;
         private readonly IPersistentProgressService _progressService;
+        private readonly IStaticDataService _staticData;
 
-        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory, IPersistentProgressService progressService)
+        public LoadLevelState(GameStateMachine stateMachine, SceneLoader sceneLoader, LoadingCurtain curtain, IGameFactory gameFactory, IPersistentProgressService progressService, IStaticDataService staticDataService)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _curtain = curtain;
             _gameFactory = gameFactory;
             _progressService = progressService;
+            _staticData = staticDataService;
         }
 
         public void Enter(string sceneName)
@@ -56,20 +63,29 @@ namespace Assets.Scripts.Infrastructure.States
         private void InitGameWorld()
         {
             InitSpawners();
-
+            InitLootPieces();
             GameObject player = InitPlayer();
-
             InitHud(player);
-
             CameraFollow(player);
         }
 
         private void InitSpawners()
         {
-            foreach (GameObject spawnerObject in GameObject.FindGameObjectsWithTag(EnemySpawnerTag))
+            string sceneKey = SceneManager.GetActiveScene().name;
+            LevelStaticData levelData = _staticData.ForLevel(sceneKey);
+
+            foreach (EnemySpawnerData spawnerData in levelData.EnemySpawners)
             {
-               var spawner = spawnerObject.GetComponent<EnemySpawner>();
-                _gameFactory.Register(spawner);
+                _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id, spawnerData.EnemyTypeId);
+            }        
+        }
+
+        private void InitLootPieces()
+        {
+            foreach (string key in _progressService.Progress.WorldData.LootData.LootPiecesOnScene.Dictionary.Keys)
+            {
+                LootPiece lootPiece = _gameFactory.CreateLoot();
+                lootPiece.GetComponent<UniqueId>().Id = key;
             }
         }
 

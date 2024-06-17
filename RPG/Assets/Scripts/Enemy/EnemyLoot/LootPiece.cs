@@ -20,7 +20,6 @@ namespace Assets.Scripts.Enemy.EnemyLoot
         private WorldData _worldData;
 
         private string _id;
-
         private bool _picked;
         private bool _loadedFromProgress;
 

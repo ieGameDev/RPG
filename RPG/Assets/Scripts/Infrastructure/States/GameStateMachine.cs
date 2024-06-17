@@ -3,7 +3,6 @@ using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.SaveLoad;
 using Assets.Scripts.Logic;
-using Assets.Scripts.StaticData;
 using System;
 using System.Collections.Generic;
 
@@ -19,7 +18,7 @@ namespace Assets.Scripts.Infrastructure.States
             _states = new Dictionary<Type, IExitableState>()
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain, services.Single<IGameFactory>(), services.Single<IPersistentProgressService>()),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, curtain, services.Single<IGameFactory>(), services.Single<IPersistentProgressService>(), services.Single<IStaticDataService>()),
                 [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentProgressService>(), services.Single<ISaveLoadService>(), services.Single<IStaticDataService>()),
                 [typeof(GameLoopState)] = new GameLoopState(this),
             };

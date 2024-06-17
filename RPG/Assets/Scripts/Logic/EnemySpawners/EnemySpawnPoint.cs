@@ -1,27 +1,25 @@
 ﻿using Assets.Scripts.Data;
 using Assets.Scripts.Enemy;
 using Assets.Scripts.Infrastructure.Factory;
-using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.StaticData;
 using UnityEngine;
 
-namespace Assets.Scripts.Logic
+namespace Assets.Scripts.Logic.EnemySpawners
 {
-    public class EnemySpawner : MonoBehaviour, ISavedProgress
+    public class EnemySpawnPoint : MonoBehaviour, ISavedProgress
     {
         public EnemyTypeId EnemyTypeId;
 
-        private string _id;
         private bool _slane;
         private IGameFactory _factory;
         private EnemyDeath _enemyDeath;
 
-        private void Awake()
-        {
-            _id = GetComponent<UniqueId>().Id;
-            _factory = AllServices.Container.Single<IGameFactory>();
-        }
+        public string Id { get; set; }
+
+        public void Construct(IGameFactory factory) =>
+            _factory = factory;
+
         private void OnDestroy()
         {
             if (_enemyDeath != null)
@@ -30,7 +28,7 @@ namespace Assets.Scripts.Logic
 
         public void LoadProgress(PlayerProgress progress)
         {
-            if (progress.KillData.ClearedSpawners.Contains(_id))
+            if (progress.KillData.ClearedSpawners.Contains(Id))
                 _slane = true;
             else
                 Spawn();
@@ -39,7 +37,7 @@ namespace Assets.Scripts.Logic
         public void UpdateProgress(PlayerProgress progress)
         {
             if (_slane)
-                progress.KillData.ClearedSpawners.Add(_id);
+                progress.KillData.ClearedSpawners.Add(Id);
         }
 
         private void Spawn()

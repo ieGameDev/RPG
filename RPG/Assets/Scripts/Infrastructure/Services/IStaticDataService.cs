@@ -1,6 +1,6 @@
-﻿using Assets.Scripts.Infrastructure.Services;
+﻿using Assets.Scripts.StaticData;
 
-namespace Assets.Scripts.StaticData
+namespace Assets.Scripts.Infrastructure.Services
 {
     public interface IStaticDataService : IService
     {
@@ -8,5 +8,6 @@ namespace Assets.Scripts.StaticData
         PlayerStaticData PlayerData();
         void LoadEnemies();
         void LoadPlayer();
+        LevelStaticData ForLevel(string sceneKey);
     }
 }

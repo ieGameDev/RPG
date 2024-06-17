@@ -5,7 +5,6 @@ using Assets.Scripts.Infrastructure.Services.Input;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.Infrastructure.Services.Randomizer;
 using Assets.Scripts.Infrastructure.Services.SaveLoad;
-using Assets.Scripts.StaticData;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure.States
@@ -13,6 +12,7 @@ namespace Assets.Scripts.Infrastructure.States
     public class BootstrapState : IState
     {
         private const string Initial = "Initial";
+
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly AllServices _services;
@@ -26,10 +26,8 @@ namespace Assets.Scripts.Infrastructure.States
             RegisterServices();
         }
 
-        public void Enter()
-        {
+        public void Enter() => 
             _sceneLoader.Load(Initial, EnterLoadLevel);
-        }
 
         public void Exit()
         {
@@ -43,6 +41,7 @@ namespace Assets.Scripts.Infrastructure.States
             RegisterStaticData();
 
             _services.RegisterSingle<IInputService>(InputService());
+            _services.RegisterSingle<IRandomService>(new RandomService());
             _services.RegisterSingle<IAssets>(new AssetProvider());
             _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
             _services.RegisterSingle<IRandomService>(new RandomService());

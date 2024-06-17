@@ -53,7 +53,7 @@ namespace Assets.Scripts.Player
 
             _currentComboState++;
 
-                if (_currentComboState > 4)
+                if (_currentComboState > 3)
                     _currentComboState = 1;
 
             _animator.SetInteger(ComboState, _currentComboState);

@@ -17,14 +17,10 @@ namespace Assets.Scripts.Enemy
             Attack.DisableAttack();
         }
 
-        private void TriggerEnter(Collider collider)
-        {
+        private void TriggerEnter(Collider collider) => 
             Attack.EnableAttack();
-        }
 
-        private void TriggerExit(Collider collider)
-        {
+        private void TriggerExit(Collider collider) => 
             Attack.DisableAttack();
-        }
     }
 }

@@ -16,8 +16,8 @@ namespace Assets.Scripts.Infrastructure.Factory
         GameObject CreateHud();
         GameObject CreateEnemy(EnemyTypeId enemyTypeId, Transform parent);
         LootPiece CreateLoot();
+        void CreateSpawner(Vector3 position, string spawnerId, EnemyTypeId enemyTypeId);
 
         void CleanUp();
-        void Register(ISavedProgressReader progressReader);
     }
 }

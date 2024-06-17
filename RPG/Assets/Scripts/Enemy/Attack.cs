@@ -7,6 +7,8 @@ namespace Assets.Scripts.Enemy
     [RequireComponent(typeof(EnemyAnimator))]
     public class Attack : MonoBehaviour
     {
+        private const string PlayerLayer = "Player";
+
         [SerializeField] private EnemyAnimator Animator;
 
         private Transform _playerTransform;
@@ -24,10 +26,8 @@ namespace Assets.Scripts.Enemy
         public void Construct(Transform playerTransform) =>
             _playerTransform = playerTransform;
 
-        private void Awake()
-        {
-            _layerMask = 1 << LayerMask.NameToLayer("Player");
-        }
+        private void Awake() => 
+            _layerMask = 1 << LayerMask.NameToLayer(PlayerLayer);
 
         private void Update()
         {
