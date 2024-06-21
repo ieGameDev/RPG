@@ -13,10 +13,8 @@ namespace Assets.Scripts.Logic
         private IStateMachine _stateMachine;
         private bool _triggered;
 
-        private void Awake()
-        {
+        private void Awake() => 
             _stateMachine = AllServices.Container.Single<IStateMachine>();
-        }
 
         private void OnTriggerEnter(Collider other)
         {

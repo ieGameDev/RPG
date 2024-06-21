@@ -14,16 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelKey: Level2
   EnemySpawners:
-  - Id: Main_707dbf91-8e55-4bd6-b3ac-fc32a8fb50df
-    EnemyTypeId: 0
-    Position: {x: -10.78, y: 0, z: -11.34}
-  - Id: Main_dd8e867f-e02c-41ab-9bfc-5a0b0bde4d5f
-    EnemyTypeId: 0
-    Position: {x: -8.27, y: 0, z: 6.41}
-  - Id: Main_dc5a29a9-460c-48e2-953d-9f66be1459d1
-    EnemyTypeId: 0
-    Position: {x: 14.08, y: 0, z: 1.6}
-  - Id: Main_32f50d10-bf38-48dd-bfaa-13a92b659e34
+  - Id: Level2_a2c41b8c-19b4-47bc-9baf-ecb8b52a96f2
     EnemyTypeId: 10
-    Position: {x: 0.4, y: 0, z: 22.2}
-  InitialPlayerPosition: {x: 2.84, y: 0, z: 5.22}
+    Position: {x: 19.22, y: -0.0000019073486, z: -8.51}
+  InitialPlayerPosition: {x: 2.76, y: 0, z: -13.77}

@@ -11,6 +11,7 @@ using Assets.Scripts.Player;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using Object = UnityEngine.Object;
@@ -76,10 +77,12 @@ namespace Assets.Scripts.Infrastructure.Factory
             return hud;
         }
 
-        public GameObject CreateEnemy(EnemyTypeId enemyTypeId, Transform parent)
+        public async Task<GameObject> CreateEnemyAsync(EnemyTypeId enemyTypeId, Transform parent)
         {
             EnemyStaticData enemyData = _staticData.ForEnemy(enemyTypeId);
-            GameObject enemy = Object.Instantiate(enemyData.Prefab, parent.position, Quaternion.identity, parent);
+
+            GameObject prefab = await _assets.Load<GameObject>(enemyData.PrefabReference);
+            GameObject enemy = Object.Instantiate(prefab, parent.position, Quaternion.identity, parent);
 
             IHealth health = enemy.GetComponent<IHealth>();
             health.CurrentHealth = enemyData.Hp;
@@ -125,6 +128,8 @@ namespace Assets.Scripts.Infrastructure.Factory
         {
             ProgressReaders.Clear();
             ProgressWriters.Clear();
+
+            _assets.CleanUp();
         }
 
         private GameObject InstantiateRegistered(string prefabPath, Vector3 position)

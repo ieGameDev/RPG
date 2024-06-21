@@ -31,7 +31,7 @@ namespace Assets.Scripts.Logic.EnemySpawners
             if (progress.KillData.ClearedSpawners.Contains(Id))
                 _slane = true;
             else
-                Spawn();
+                SpawnAsync();
         }
 
         public void UpdateProgress(PlayerProgress progress)
@@ -40,9 +40,9 @@ namespace Assets.Scripts.Logic.EnemySpawners
                 progress.KillData.ClearedSpawners.Add(Id);
         }
 
-        private void Spawn()
+        private async void SpawnAsync()
         {
-            GameObject enemy = _factory.CreateEnemy(EnemyTypeId, transform);
+            GameObject enemy = await _factory.CreateEnemyAsync(EnemyTypeId, transform);
             _enemyDeath = enemy.GetComponent<EnemyDeath>();
             _enemyDeath.DeathHappened += Slay;
         }

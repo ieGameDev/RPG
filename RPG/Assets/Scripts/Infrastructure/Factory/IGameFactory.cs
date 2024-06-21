@@ -3,6 +3,7 @@ using Assets.Scripts.Infrastructure.Services;
 using Assets.Scripts.Infrastructure.Services.PersistentProgress;
 using Assets.Scripts.StaticData;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Infrastructure.Factory
@@ -14,7 +15,7 @@ namespace Assets.Scripts.Infrastructure.Factory
 
         GameObject CreatePlayer(Vector3 initialPoint);
         GameObject CreateHud();
-        GameObject CreateEnemy(EnemyTypeId enemyTypeId, Transform parent);
+        Task<GameObject> CreateEnemyAsync(EnemyTypeId enemyTypeId, Transform parent);
         LootPiece CreateLoot();
         void CreateSpawner(Vector3 position, string spawnerId, EnemyTypeId enemyTypeId);
 

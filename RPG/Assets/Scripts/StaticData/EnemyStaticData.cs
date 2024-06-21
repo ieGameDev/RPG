@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace Assets.Scripts.StaticData
 {
@@ -7,24 +8,24 @@ namespace Assets.Scripts.StaticData
     {
         public EnemyTypeId EnemyTypeId;
 
-        [Range(1,200)]
+        [Range(1, 200)]
         public float Hp;
 
-        [Range(1,30)]
+        [Range(1, 30)]
         public float Damage;
-
-        public int MinLoot;
-        public int MaxLoot;
 
         [Range(1f, 10)]
         public float MoveSpeed;
 
-        [Range(0.5f,1)]
+        [Range(0.5f, 1)]
         public float EffectiveDistance;
 
         [Range(0.5f, 1)]
         public float Cleavage;
 
-        public GameObject Prefab;
+        public int MinLoot;
+        public int MaxLoot;
+
+        public AssetReferenceGameObject PrefabReference;
     }
 }

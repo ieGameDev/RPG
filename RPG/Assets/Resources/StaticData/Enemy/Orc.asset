@@ -15,9 +15,13 @@ MonoBehaviour:
   EnemyTypeId: 0
   Hp: 100
   Damage: 10
-  MinLoot: 1
-  MaxLoot: 5
   MoveSpeed: 3
   EffectiveDistance: 0.5
   Cleavage: 0.5
-  Prefab: {fileID: 9049398297506946987, guid: 96f096471516f9444b499339ece445c5, type: 3}
+  MinLoot: 1
+  MaxLoot: 5
+  PrefabReference:
+    m_AssetGUID: 96f096471516f9444b499339ece445c5
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
