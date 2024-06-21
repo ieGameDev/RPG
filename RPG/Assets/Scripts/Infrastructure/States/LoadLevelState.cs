@@ -8,6 +8,7 @@ using Assets.Scripts.Logic;
 using Assets.Scripts.Player;
 using Assets.Scripts.StaticData;
 using Assets.Scripts.UI;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -36,26 +37,31 @@ namespace Assets.Scripts.Infrastructure.States
         {
             _curtain.Show();
             _gameFactory.CleanUp();
+            _gameFactory.WarmUp();
             _sceneLoader.Load(sceneName, OnLoaded);
         }
 
         public void Exit() =>
             _curtain.Hide();
 
-        private void OnLoaded()
+        private async void OnLoaded()
         {
-            InitGameWorld();
+            await InitGameWorld();
+
             InformProgressReaders();
+
             _stateMachine.Enter<GameLoopState>();
         }
 
-        private void InitGameWorld()
+        private async Task InitGameWorld()
         {
             LevelStaticData levelData = InitStaticData();
-            InitSpawners(levelData);
-            InitLootPieces();
-            GameObject player = InitPlayer(levelData);
-            InitHud(player);
+
+            await InitSpawners(levelData);
+            await InitLootPieces();
+            GameObject player = await InitPlayer(levelData);
+            await InitHud(player);
+
             CameraFollow(player);
         }
 
@@ -65,33 +71,34 @@ namespace Assets.Scripts.Infrastructure.States
                 progressReader.LoadProgress(_progressService.Progress);
         }
 
-        private LevelStaticData InitStaticData() => 
+        private LevelStaticData InitStaticData() =>
             _staticData.ForLevel(SceneManager.GetActiveScene().name);
 
-        private void InitSpawners(LevelStaticData levelData)
+        private async Task InitSpawners(LevelStaticData levelData)
         {
             foreach (EnemySpawnerData spawnerData in levelData.EnemySpawners)
-            {
-                _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id, spawnerData.EnemyTypeId);
-            }
+                await _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id, spawnerData.EnemyTypeId);
         }
 
-        private void InitLootPieces()
+        private async Task InitLootPieces()
         {
             foreach (string key in _progressService.Progress.WorldData.LootData.LootPiecesOnScene.Dictionary.Keys)
             {
-                LootPiece lootPiece = _gameFactory.CreateLoot();
+                LootPiece lootPiece = await _gameFactory.CreateLoot();
                 lootPiece.GetComponent<UniqueId>().Id = key;
             }
         }
 
-        private GameObject InitPlayer(LevelStaticData levelData) =>
-            _gameFactory.CreatePlayer(levelData.InitialPlayerPosition);
+        private async Task<GameObject> InitPlayer(LevelStaticData levelData) =>
+            await _gameFactory.CreatePlayer(levelData.InitialPlayerPosition);
 
-        private void InitHud(GameObject player) =>
-            _gameFactory.CreateHud()
-                .GetComponentInChildren<ActorUI>()
+        private async Task InitHud(GameObject player)
+        {
+            GameObject hud = await _gameFactory.CreateHud();
+
+            hud.GetComponentInChildren<ActorUI>()
                 .Construct(player.GetComponent<PlayerHealth>());
+        }
 
         private void CameraFollow(GameObject player) =>
             Camera.main.GetComponent<CameraFollow>().Follow(player);

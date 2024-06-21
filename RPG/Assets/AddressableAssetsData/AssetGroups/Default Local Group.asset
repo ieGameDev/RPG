@@ -25,6 +25,22 @@ MonoBehaviour:
     m_Address: Golem
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: a84d937d53cf6db48b3d3ad718b17a49
+    m_Address: Loot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 527e81979e340e543b13417b7942e83e
+    m_Address: SpawnPoint
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cc91c8ba8b9a34f4d99e70d721f60b64
+    m_Address: FemaleCharacter
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a0ab30a457bf1a74bb2c47b0f6e34799
+    m_Address: Hud
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: d892c1bd8a2646841acb71ace2b7169c, type: 2}
   m_SchemaSet:

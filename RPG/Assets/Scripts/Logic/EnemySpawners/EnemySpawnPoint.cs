@@ -42,7 +42,7 @@ namespace Assets.Scripts.Logic.EnemySpawners
 
         private async void SpawnAsync()
         {
-            GameObject enemy = await _factory.CreateEnemyAsync(EnemyTypeId, transform);
+            GameObject enemy = await _factory.CreateEnemy(EnemyTypeId, transform);
             _enemyDeath = enemy.GetComponent<EnemyDeath>();
             _enemyDeath.DeathHappened += Slay;
         }

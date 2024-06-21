@@ -3,6 +3,7 @@ using Assets.Scripts.Infrastructure.Factory;
 using Assets.Scripts.Infrastructure.Services.Randomizer;
 using Assets.Scripts.Logic;
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemy.EnemyLoot
@@ -32,17 +33,17 @@ namespace Assets.Scripts.Enemy.EnemyLoot
             _lootMax = max;
         }
 
-        private void SpawnLoot()
+        private async void SpawnLoot()
         {
             _enemyDeath.DeathHappened -= SpawnLoot;
-            StartCoroutine(Spawn());
+            await SpawnAsync();
         }
 
-        private IEnumerator Spawn()
+        private async Task SpawnAsync()
         {
-            yield return new WaitForSeconds(1.5f);
+            await Task.Delay(1500);
 
-            LootPiece loot = _factory.CreateLoot();
+            LootPiece loot = await _factory.CreateLoot();
             loot.transform.position = transform.position;
             loot.GetComponent<UniqueId>().GenerateId();
 
