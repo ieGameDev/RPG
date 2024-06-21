@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.Infrastructure.States
 {
-    public class GameStateMachine
+    public class GameStateMachine : IStateMachine
     {
         private readonly Dictionary<Type, IExitableState> _states;
         private IExitableState _activeState;

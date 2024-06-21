@@ -15,9 +15,6 @@ namespace Assets.Scripts.Infrastructure.States
 {
     public class LoadLevelState : IPayLoadedState<string>
     {
-        private const string InitialPointTag = "InitialPoint";
-        private const string EnemySpawnerTag = "EnemySpawner";
-
         private readonly GameStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly LoadingCurtain _curtain;
@@ -48,36 +45,35 @@ namespace Assets.Scripts.Infrastructure.States
         private void OnLoaded()
         {
             InitGameWorld();
-
             InformProgressReaders();
-
             _stateMachine.Enter<GameLoopState>();
-        }
-
-        private void InformProgressReaders()
-        {
-            foreach (var progressReader in _gameFactory.ProgressReaders)
-                progressReader.LoadProgress(_progressService.Progress);
         }
 
         private void InitGameWorld()
         {
-            InitSpawners();
+            LevelStaticData levelData = InitStaticData();
+            InitSpawners(levelData);
             InitLootPieces();
-            GameObject player = InitPlayer();
+            GameObject player = InitPlayer(levelData);
             InitHud(player);
             CameraFollow(player);
         }
 
-        private void InitSpawners()
+        private void InformProgressReaders()
         {
-            string sceneKey = SceneManager.GetActiveScene().name;
-            LevelStaticData levelData = _staticData.ForLevel(sceneKey);
+            foreach (ISavedProgressReader progressReader in _gameFactory.ProgressReaders)
+                progressReader.LoadProgress(_progressService.Progress);
+        }
 
+        private LevelStaticData InitStaticData() => 
+            _staticData.ForLevel(SceneManager.GetActiveScene().name);
+
+        private void InitSpawners(LevelStaticData levelData)
+        {
             foreach (EnemySpawnerData spawnerData in levelData.EnemySpawners)
             {
                 _gameFactory.CreateSpawner(spawnerData.Position, spawnerData.Id, spawnerData.EnemyTypeId);
-            }        
+            }
         }
 
         private void InitLootPieces()
@@ -89,15 +85,13 @@ namespace Assets.Scripts.Infrastructure.States
             }
         }
 
-        private void InitHud(GameObject player)
-        {
-            GameObject hud = _gameFactory.CreateHud();
+        private GameObject InitPlayer(LevelStaticData levelData) =>
+            _gameFactory.CreatePlayer(levelData.InitialPlayerPosition);
 
-            hud.GetComponentInChildren<ActorUI>().Construct(player.GetComponent<PlayerHealth>());
-        }
-
-        private GameObject InitPlayer() => 
-            _gameFactory.CreatePlayer(GameObject.FindWithTag(InitialPointTag));
+        private void InitHud(GameObject player) =>
+            _gameFactory.CreateHud()
+                .GetComponentInChildren<ActorUI>()
+                .Construct(player.GetComponent<PlayerHealth>());
 
         private void CameraFollow(GameObject player) =>
             Camera.main.GetComponent<CameraFollow>().Follow(player);

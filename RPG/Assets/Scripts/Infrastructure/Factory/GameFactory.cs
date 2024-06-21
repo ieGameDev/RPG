@@ -39,11 +39,11 @@ namespace Assets.Scripts.Infrastructure.Factory
             _progressService = progressService;
         }
 
-        public GameObject CreatePlayer(GameObject initialPoint)
+        public GameObject CreatePlayer(Vector3 initialPoint)
         {
             PlayerStaticData playerData = _staticData.PlayerData();
 
-            PlayerGameObject = Object.Instantiate(playerData.Prefab, initialPoint.transform.position, Quaternion.identity);
+            PlayerGameObject = Object.Instantiate(playerData.Prefab, initialPoint, Quaternion.identity);
 
             PlayerMove playerMove = PlayerGameObject.GetComponent<PlayerMove>();
             PlayerHealth playerHealth = PlayerGameObject.GetComponent<PlayerHealth>();

@@ -26,7 +26,7 @@ namespace Assets.Scripts.Infrastructure.States
             RegisterServices();
         }
 
-        public void Enter() => 
+        public void Enter() =>
             _sceneLoader.Load(Initial, EnterLoadLevel);
 
         public void Exit()
@@ -40,13 +40,22 @@ namespace Assets.Scripts.Infrastructure.States
         {
             RegisterStaticData();
 
+            _services.RegisterSingle<IStateMachine>(_stateMachine);
+            _services.RegisterSingle<IAssets>(new AssetProvider());
             _services.RegisterSingle<IInputService>(InputService());
             _services.RegisterSingle<IRandomService>(new RandomService());
-            _services.RegisterSingle<IAssets>(new AssetProvider());
             _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
             _services.RegisterSingle<IRandomService>(new RandomService());
-            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssets>(), _services.Single<IStaticDataService>(), _services.Single<IRandomService>(), _services.Single<IPersistentProgressService>()));
-            _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentProgressService>(), _services.Single<IGameFactory>()));
+
+            _services.RegisterSingle<IGameFactory>(new GameFactory(
+                _services.Single<IAssets>(),
+                _services.Single<IStaticDataService>(),
+                _services.Single<IRandomService>(),
+                _services.Single<IPersistentProgressService>()));
+
+            _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(
+                _services.Single<IPersistentProgressService>(),
+                _services.Single<IGameFactory>()));
         }
 
         private void RegisterStaticData()

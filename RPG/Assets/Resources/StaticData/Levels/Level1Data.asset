@@ -10,19 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1920191cf5af4749bebc72bda6e1ad0, type: 3}
-  m_Name: LevelData
+  m_Name: Level1Data
   m_EditorClassIdentifier: 
   LevelKey: Main
   EnemySpawners:
-  - Id: Main_32f50d10-bf38-48dd-bfaa-13a92b659e34
-    EnemyTypeId: 10
-    Position: {x: 7.67, y: 0, z: -16.91}
-  - Id: Main_dc5a29a9-460c-48e2-953d-9f66be1459d1
-    EnemyTypeId: 0
-    Position: {x: 14.08, y: 0, z: 1.6}
-  - Id: Main_dd8e867f-e02c-41ab-9bfc-5a0b0bde4d5f
-    EnemyTypeId: 0
-    Position: {x: -8.27, y: 0, z: 6.41}
   - Id: Main_707dbf91-8e55-4bd6-b3ac-fc32a8fb50df
     EnemyTypeId: 0
     Position: {x: -17.42, y: 0, z: -4.49}
+  - Id: Main_dd8e867f-e02c-41ab-9bfc-5a0b0bde4d5f
+    EnemyTypeId: 0
+    Position: {x: -8.27, y: 0, z: 6.41}
+  - Id: Main_dc5a29a9-460c-48e2-953d-9f66be1459d1
+    EnemyTypeId: 0
+    Position: {x: 14.08, y: 0, z: 1.6}
+  - Id: Main_32f50d10-bf38-48dd-bfaa-13a92b659e34
+    EnemyTypeId: 10
+    Position: {x: 7.67, y: 0, z: -16.91}
+  InitialPlayerPosition: {x: -1.79, y: 0, z: -6.19}
