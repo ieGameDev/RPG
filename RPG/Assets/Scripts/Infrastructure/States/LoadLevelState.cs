@@ -58,9 +58,11 @@ namespace Assets.Scripts.Infrastructure.States
             LevelStaticData levelData = InitStaticData();
 
             await InitSpawners(levelData);
-            await InitLootPieces();
+
             GameObject player = await InitPlayer(levelData);
             await InitHud(player);
+
+            await InitLootPieces();
 
             CameraFollow(player);
         }

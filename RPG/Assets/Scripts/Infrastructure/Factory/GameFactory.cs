@@ -120,6 +120,9 @@ namespace Assets.Scripts.Infrastructure.Factory
 
             lootPiece.Construct(_progressService.Progress.WorldData);
 
+            LookAtPlayer soul = lootPiece.GetComponentInChildren<LookAtPlayer>();
+            soul.Construct(PlayerGameObject.transform);
+
             return lootPiece;
         }
 

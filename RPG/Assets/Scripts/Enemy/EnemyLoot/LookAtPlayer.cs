@@ -7,13 +7,16 @@ namespace Assets.Scripts.Enemy.EnemyLoot
     {
         private Transform _playerTransform;
 
-        private void Start()
-        {
-            PlayerMove player = FindObjectOfType<PlayerMove>();
+        public void Construct(Transform playerTransform) => 
+            _playerTransform = playerTransform;
 
-            if (player != null)
-                _playerTransform = player.transform;
-        }
+        //private void Start()
+        //{
+        //    PlayerMove player = FindObjectOfType<PlayerMove>();
+
+        //    if (player != null)
+        //        _playerTransform = player.transform;
+        //}
 
         private void Update()
         {

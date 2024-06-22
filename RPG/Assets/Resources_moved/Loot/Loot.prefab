@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb96e7f1cfc457489f481f87ba0180d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Id: 
+  Id: Loot_6a5d176e-e245-489a-b787-cdba1a8ecb12
 --- !u!1001 &56410769527078196
 PrefabInstance:
   m_ObjectHideFlags: 0
