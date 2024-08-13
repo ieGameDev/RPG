@@ -56,14 +56,10 @@ namespace Assets.Scripts.Infrastructure.States
         private async Task InitGameWorld()
         {
             LevelStaticData levelData = InitStaticData();
-
             await InitSpawners(levelData);
-
             GameObject player = await InitPlayer(levelData);
-            await InitHud(player);
-
             await InitLootPieces();
-
+            await InitHud(player);
             CameraFollow(player);
         }
 
